@@ -1,5 +1,4 @@
 import random
-import keyboard as kb
 import time
 
 import Screen
@@ -8,9 +7,8 @@ import Controller
 import Input
 
 def Update():
-    Screen.display()
-    key = kb.read_key()
-    Input.on_press(key)
+    #Screen.display()
+    Input.on_press()
     time.sleep(0.05)
 
 def Start():

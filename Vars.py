@@ -8,3 +8,4 @@ PieceRot = "N"
 PiecesLst = ["O","I","L","J","Z","S","T"]
 PieceQ = []
 locking = False
+heldPiece = ""

@@ -84,6 +84,7 @@ def lockPiece():
         for n in range(4):
             if(pieceCoords[i][n] != 0):
                 Vars.setScreen[Vars.piecePos[0]+i][Vars.piecePos[1]+n] = pieceCoords[i][n]
+    lineClear()
     newPiece()
 
 def dropPiece():
@@ -91,18 +92,36 @@ def dropPiece():
     piecesDict = json.load(pieceStr)
     pieceCoords = piecesDict[Vars.Piece][Vars.PieceRot]
     newPos = Vars.piecePos
-    for s in Vars.setScreen[newPos[0]:]:
+    for s in range(len(Vars.setScreen[Vars.piecePos[0]:19])):
+        safeMove = True
+        newPos[0] += 1
         for i in range(4):
             for n in range(4):
                 if(pieceCoords[i][n] != 0):
                     try:
                         tl = Vars.setScreen[newPos[0]+i][newPos[1]+n]
                         if(tl != 0):
-                            break
-                    except: break
-            else:
-                continue
+                            safeMove = False
+                    except: safeMove = False
+        if(safeMove): Vars.piecePos[0] = newPos[0]
+        else:
+            Vars.piecePos[0] = newPos[0]-1
             break
-        newPos[0] += 1
-    Vars.piecePos[0] = newPos[0]
     lockPiece()
+
+def lineClear():
+    for i in range(len(Vars.setScreen)):
+        if 0 not in Vars.setScreen[i]:
+            Vars.setScreen.pop(i)
+            Vars.setScreen.insert(0, [0 for i in range(Vars.width)])
+
+def holdPiece():
+    Vars.PieceRot = "N"
+    if(Vars.heldPiece == ""):
+        Vars.heldPiece = Vars.Piece
+        newPiece()
+    else:
+        tp = Vars.heldPiece
+        Vars.heldPiece = Vars.Piece
+        Vars.Piece = tp
+        makePiece(Vars.Piece, Vars.PieceRot)

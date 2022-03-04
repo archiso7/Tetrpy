@@ -15,7 +15,8 @@ def display():
     }
     tl = [[pieceColour[i] for i in n] for n in Vars.screen]
     ts = '\n'.join(list(map(''.join, tl)))
-    print('\033[2J' + '\033[0;0H' + ts)
+    print('\033[0;0H' + ts)
+    #print('\033[2J' + '\033[0;0H' + ts)
     #print(ts)
 
 def game_space():
