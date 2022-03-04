@@ -1,5 +1,4 @@
 import random
-import time
 
 import Screen
 import Vars
@@ -10,7 +9,6 @@ def Update():
     Screen.display()
     Input.on_press()
     Controller.startLock()
-    time.sleep(0.05)
 
 def Start():
     Vars.PieceQ = random.sample(Vars.PiecesLst, len(Vars.PiecesLst))

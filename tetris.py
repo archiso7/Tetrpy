@@ -4,4 +4,4 @@ import Manager
 Manager.Start()
 while True:
     Manager.Update()
-    time.sleep(0.01)
+    time.sleep(0.075)

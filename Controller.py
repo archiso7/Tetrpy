@@ -1,7 +1,6 @@
 import json
 import copy
 from random import randint
-import time
 
 import Vars
 import Screen
@@ -56,6 +55,8 @@ def movePiece(direction):
     if(lock):
         if Vars.locking:
             Vars.lockTime /= 2
+        else:
+            Vars.lockTime = 75
         Vars.lockTimer = 1
         startLock()
 
@@ -71,6 +72,8 @@ def makePiece(piece:str, rot):
     Screen.display()
 
 def newPiece():
+    Vars.lockTimer = 0
+    Vars.lockTime = 75
     Vars.piecePos = [1,4]
     Vars.Piece = Vars.PieceQ[0]
     Vars.PieceQ.pop(0)
@@ -126,23 +129,23 @@ def holdPiece():
         tp = Vars.heldPiece
         Vars.heldPiece = Vars.Piece
         Vars.Piece = tp
+        Vars.piecePos = [1,4]
         makePiece(Vars.Piece, Vars.PieceRot)
 
 def startLock():
     pieceStr = open("Pieces.json")
     piecesDict = json.load(pieceStr)
     pieceCoords = piecesDict[Vars.Piece][Vars.PieceRot]
-    Vars.screen = copy.deepcopy(Vars.setScreen)
     newPos = [x + y for x, y in zip(Vars.piecePos, [1,0])]
-    safePlace = True
+    safePlace = False
     for i in range(4): 
         for n in range(4):
             if(pieceCoords[i][n] != 0):
                 try:
                     tl = Vars.setScreen[newPos[0]+i][newPos[1]+n]
                     if tl != 0:
-                        safePlace = False
-                except: pass
+                        safePlace = True
+                except: safePlace = True
     if(Vars.lockTimer > 0) and safePlace:
         if(Vars.lockTimer >= Vars.lockTime):
             Vars.locking = False
@@ -151,3 +154,5 @@ def startLock():
             Vars.lockTimer += 1
     else:
         Vars.lockTimer = 0
+        Vars.lockTime = 75
+        Vars.locking = False
