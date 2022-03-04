@@ -87,4 +87,22 @@ def lockPiece():
     newPiece()
 
 def dropPiece():
-    pass
+    pieceStr = open("Pieces.json")
+    piecesDict = json.load(pieceStr)
+    pieceCoords = piecesDict[Vars.Piece][Vars.PieceRot]
+    newPos = Vars.piecePos
+    for s in Vars.setScreen[newPos[0]:]:
+        for i in range(4):
+            for n in range(4):
+                if(pieceCoords[i][n] != 0):
+                    try:
+                        tl = Vars.setScreen[newPos[0]+i][newPos[1]+n]
+                        if(tl != 0):
+                            break
+                    except: break
+            else:
+                continue
+            break
+        newPos[0] += 1
+    Vars.piecePos[0] = newPos[0]
+    lockPiece()
