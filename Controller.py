@@ -54,9 +54,10 @@ def movePiece(direction):
         Vars.piecePos = newPos
     makePiece(Vars.Piece, Vars.PieceRot)
     if(lock):
-        time.sleep(1)
-        Vars.locking = False
-        lockPiece()
+        if Vars.locking:
+            Vars.lockTime /= 2
+        Vars.lockTimer = 1
+        startLock()
 
 def makePiece(piece:str, rot):
     pieceStr = open("Pieces.json")
@@ -77,10 +78,11 @@ def newPiece():
     makePiece(Vars.Piece, Vars.PieceRot)
 
 def lockPiece():
+    Vars.lockTime = 75
     pieceStr = open("Pieces.json")
     piecesDict = json.load(pieceStr)
     pieceCoords = piecesDict[Vars.Piece][Vars.PieceRot]
-    for i in range(4): 
+    for i in range(4):
         for n in range(4):
             if(pieceCoords[i][n] != 0):
                 Vars.setScreen[Vars.piecePos[0]+i][Vars.piecePos[1]+n] = pieceCoords[i][n]
@@ -125,3 +127,27 @@ def holdPiece():
         Vars.heldPiece = Vars.Piece
         Vars.Piece = tp
         makePiece(Vars.Piece, Vars.PieceRot)
+
+def startLock():
+    pieceStr = open("Pieces.json")
+    piecesDict = json.load(pieceStr)
+    pieceCoords = piecesDict[Vars.Piece][Vars.PieceRot]
+    Vars.screen = copy.deepcopy(Vars.setScreen)
+    newPos = [x + y for x, y in zip(Vars.piecePos, [1,0])]
+    safePlace = True
+    for i in range(4): 
+        for n in range(4):
+            if(pieceCoords[i][n] != 0):
+                try:
+                    tl = Vars.setScreen[newPos[0]+i][newPos[1]+n]
+                    if tl != 0:
+                        safePlace = False
+                except: pass
+    if(Vars.lockTimer > 0) and safePlace:
+        if(Vars.lockTimer >= Vars.lockTime):
+            Vars.locking = False
+            lockPiece()
+        else:
+            Vars.lockTimer += 1
+    else:
+        Vars.lockTimer = 0

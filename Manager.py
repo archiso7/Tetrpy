@@ -7,8 +7,9 @@ import Controller
 import Input
 
 def Update():
-    #Screen.display()
+    Screen.display()
     Input.on_press()
+    Controller.startLock()
     time.sleep(0.05)
 
 def Start():

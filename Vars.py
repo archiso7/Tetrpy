@@ -9,3 +9,5 @@ PiecesLst = ["O","I","L","J","Z","S","T"]
 PieceQ = []
 locking = False
 heldPiece = ""
+lockTimer = 0
+lockTime = 75
