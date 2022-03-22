@@ -69,6 +69,7 @@ def makePiece(piece:str, rot):
         for n in range(4):
             if(pieceCoords[i][n] != 0):
                 Vars.screen[Vars.piecePos[0]+i][Vars.piecePos[1]+n] = pieceCoords[i][n]
+    Screen.makeGhostPiece()
     Screen.display()
 
 def newPiece():
