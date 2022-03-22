@@ -11,7 +11,7 @@ def Update():
     Controller.startLock()
 
 def Start():
-    Vars.PieceQ = random.sample(Vars.PiecesLst, len(Vars.PiecesLst))
+    Vars.PieceQ = 2*random.sample(Vars.PiecesLst, len(Vars.PiecesLst))
     Screen.game_space()
     Controller.newPiece()
 
