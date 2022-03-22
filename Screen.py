@@ -18,8 +18,8 @@ def display():
     tl = [[pieceColour[i] for i in n] for n in Vars.screen]
     ts = '\n'.join(list(map(''.join, tl)))
     print('\033[0;0H' + ts)
-    #print('\033[2J' + '\033[0;0H' + ts)
-    #print(ts)
+    # print('\033[0;0H' + '\033[2J' + ts)
+    # print(ts)
 
 def game_space():
     Vars.setScreen = [[0 for i in range(Vars.width)] for i in range(Vars.height-5)]

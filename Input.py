@@ -1,6 +1,7 @@
 import Controller
 from functools import partial
 import keyboard as kb
+
 from Vars import keyLst, keyPressed
 
 def on_press():

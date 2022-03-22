@@ -6,7 +6,6 @@ import Controller
 import Input
 
 def Update():
-    # Screen.makeGhostPiece()
     autoFall()
     Input.on_press()
     Controller.startLock()

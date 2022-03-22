@@ -1,6 +1,6 @@
 import json
 import copy
-from random import randint
+from random import sample
 
 import Vars
 import Screen
@@ -65,11 +65,11 @@ def makePiece(piece:str, rot):
     piecesDict = json.load(pieceStr)
     pieceCoords = piecesDict[piece][rot]
     Vars.screen = copy.deepcopy(Vars.setScreen)
+    Screen.makeGhostPiece()
     for i in range(4): 
         for n in range(4):
             if(pieceCoords[i][n] != 0):
                 Vars.screen[Vars.piecePos[0]+i][Vars.piecePos[1]+n] = pieceCoords[i][n]
-    Screen.makeGhostPiece()
     Screen.display()
 
 def newPiece():
@@ -78,7 +78,8 @@ def newPiece():
     Vars.piecePos = [1,4]
     Vars.Piece = Vars.PieceQ[0]
     Vars.PieceQ.pop(0)
-    Vars.PieceQ.append(Vars.PiecesLst[randint(0, len(Vars.PiecesLst)-1)])
+    if(len(Vars.PieceQ) <= 0):
+        Vars.PieceQ = sample(Vars.PiecesLst, len(Vars.PiecesLst))
     makePiece(Vars.Piece, Vars.PieceRot)
 
 def lockPiece():
