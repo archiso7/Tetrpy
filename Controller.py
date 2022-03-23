@@ -1,6 +1,7 @@
 import json
 import copy
 from random import sample
+import sys
 
 import Vars
 import Screen
@@ -93,6 +94,8 @@ def lockPiece():
             if(pieceCoords[i][n] not in [0, -1]):
                 Vars.setScreen[Vars.piecePos[0]+i][Vars.piecePos[1]+n] = pieceCoords[i][n]
     lineClear()
+    if(Vars.piecePos[0] < 6):
+        sys.exit()
     newPiece()
 
 def dropPiece():
